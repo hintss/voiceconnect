@@ -1,0 +1,27 @@
+name: VoiceConnect
+description: allows players to query the voice (mumble/ts3) server from in-game
+author: hintss
+main: tk.hintss.voiceConnect.VoiceConnect
+version: 0.7
+
+commands:
+  voice:
+    description: gets voice (mumble/ts3) server status
+  mumble:
+    description: alias of /voice
+  ts:
+    description: alias of /voice
+    
+permissions:
+  voiceconnect.*:
+    description: gives access to all commands
+    default: op
+    children:
+      voiceconnect.reload: true
+      voiceconnect.use: true
+  voiceconnect.reload:
+    description: gives access to reload the config
+    default: op
+  voiceconnect.use:
+    description: gives access to /voice
+    default: true

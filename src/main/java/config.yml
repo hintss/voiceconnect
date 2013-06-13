@@ -1,0 +1,63 @@
+# You must fill out your voice server IP/type here
+#--------------------------------------------------------#
+
+# ip/domain of voice server
+ip: 127.0.0.1
+
+# port of voice server
+# this is the port that users connect to
+# (64738 by default in mumble, 9987 default in ts3)
+port: 64738
+
+# type of voice server - currently only mumble/murmur supported
+# just put in either "mumble" or "ts3"
+type: mumble
+
+# This section is required if you are using ts3
+#--------------------------------------------------------#
+
+# The username used by serverQuery (default is "serveradmin")
+queryusername: serveradmin
+
+# The password used by serverQuery (randomly generated on first start)
+querypassword: password
+
+# ServerQuery port (10011 by default (THIS IS NOT THE PORT CLIENTS USE))
+queryport: 10011
+
+# Changing this section is optional
+#--------------------------------------------------------#
+
+# response to /mumble, /voice, and /ts commands
+# keep the "!!str "" and the ending """, stuff becomes derpy otherwise
+# $users is replaced with current users on the voice server
+# $max is replaced with max users on the voice server
+# $type is replaced with either "Mumble" or "TS3", depending on what you put above
+# $ip is replaced with ip above ^
+# $port is replaced with port above ^
+# color codes can be done with the "$" character ("$A" for green)
+normalresponse:
+  - "$A[VoiceConnect] $users/$max users currently on $type!"
+  - "$A[VoiceConnect] Join our $type server at $ip, port $port!"
+
+emptyresponse:
+  - "$A[VoiceConnect] Our $type is currently empty, but you can fix that!"
+  - "$A[VoiceConnect] Join our $type server at $ip, port $port"
+
+fullresponse:
+  - "$C[VoiceConnect] Our $type server is full! Sorry!"
+  - "$C[VoiceConnect] You can try to join anyway at $ip, port $port"
+
+internalerrorresponse:
+  - "$C[VoiceConnect] VoiceConnect has encountered an internal error. Please try again."
+
+hostnotfoundresponse:
+  - "$C[VoiceConnect] Could not resolve $type IP. (is DNS down?)"
+
+couldnotconnectresponse:
+  - "$C[VoiceConnect] $type server seems to be down :("
+
+timeoutresponse:
+  - "$C[VoiceConnect] Timeout while connecting to $type server"
+
+auto-update: true

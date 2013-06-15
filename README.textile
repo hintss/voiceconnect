@@ -1,0 +1,6 @@
+Simple plugin that allows people to run a /voice command that returns the 
+current and max users count on your mumble/ts3 server. 
+
+* "bitbucket":https://bitbucket.org/hintss/voiceconnect
+* "bukkitdev":http://dev.bukkit.org/server-mods/mumbleconnect/
+* "jenkins":http://build.hintss.tk/job/VoiceConnect/

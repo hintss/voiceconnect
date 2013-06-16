@@ -20,13 +20,13 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class QueryServer {
-    public static Integer[] QueryServer(VoiceServers type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
+    public static Integer[] QueryServer(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
         
         // { error, users, max}
         // 0 = works, 1=internal error, 2=dns, 3=can't connect, 4=timeout
         Integer[] response = {1, 0, 0};
         
-        if (type == VoiceServers.MUMBLE) {
+        if (type == VoiceServerTypes.MUMBLE) {
             DatagramSocket clientsocket = null;
             try {
                 clientsocket = new DatagramSocket();
@@ -61,7 +61,7 @@ public class QueryServer {
                 response[0] = 3;
             }
             return response;
-        } else if (type == VoiceServers.TS3) {
+        } else if (type == VoiceServerTypes.TS3) {
             try {
                 InetSocketAddress address = new InetSocketAddress(serverIP, queryport);
                 

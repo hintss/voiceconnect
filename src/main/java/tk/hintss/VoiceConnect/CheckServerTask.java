@@ -1,4 +1,4 @@
-package tk.hintss.VoiceConnect;
+package tk.hintss.voiceconnect;
 
 import java.util.List;
 import org.bukkit.command.CommandSender;
@@ -15,36 +15,33 @@ public class CheckServerTask extends BukkitRunnable {
     }
     
     public void run() {
-        Integer[] status = {1,0,0};
-        status = QueryServer.QueryServer(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+        ServerStatus status = QueryServer.QueryServer(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
 
-        if (status[0] == 0) {
-            if (status[1] == 0) {
-                List<String> response = plugin.getConfig().getStringList("emptyresponse");
-                for (String line : response) {
-                    if (line != null) {
-                        line = StringSubstitutions.SubstituteString(plugin, status, line);
-                        sender.sendMessage(line);
-                    }
-                }
-            } else if (status[1] >= status[2]) {
-                List<String> response = plugin.getConfig().getStringList("fullresponse");
-                for (String line : response) {
-                    if (line != null) {
-                        line = StringSubstitutions.SubstituteString(plugin, status, line);
-                        sender.sendMessage(line);
-                    }
-                }
-            } else {
-                List<String> response = plugin.getConfig().getStringList("normalresponse");
-                for (String line : response) {
-                    if (line != null) {
-                        line = StringSubstitutions.SubstituteString(plugin, status, line);
-                        sender.sendMessage(line);
-                    }
+        if (status.getStatus() == VoiceServerStatuses.OK) {
+            List<String> response = plugin.getConfig().getStringList("normalresponse");
+            for (String line : response) {
+                if (line != null) {
+                    line = StringSubstitutions.SubstituteString(plugin, status, line);
+                    sender.sendMessage(line);
                 }
             }
-        } else if (status[0] == 1) {
+        } else if (status.getStatus() == VoiceServerStatuses.EMPTY) {
+            List<String> response = plugin.getConfig().getStringList("emptyresponse");
+            for (String line : response) {
+                if (line != null) {
+                    line = StringSubstitutions.SubstituteString(plugin, status, line);
+                    sender.sendMessage(line);
+                }
+            }
+        } else if (status.getStatus() == VoiceServerStatuses.FULL) {
+            List<String> response = plugin.getConfig().getStringList("fullresponse");
+            for (String line : response) {
+                if (line != null) {
+                    line = StringSubstitutions.SubstituteString(plugin, status, line);
+                    sender.sendMessage(line);
+                }
+            }
+        } else if (status.getStatus() == VoiceServerStatuses.INTERNAL_ERROR) {
             List<String> response = plugin.getConfig().getStringList("internalerrorresponse");
             for (String line : response) {
                 if (line != null) {
@@ -52,7 +49,7 @@ public class CheckServerTask extends BukkitRunnable {
                     sender.sendMessage(line);
                 }
             }
-        } else if (status[0] == 2) {
+        } else if (status.getStatus() == VoiceServerStatuses.HOST_NOT_FOUND) {
             List<String> response = plugin.getConfig().getStringList("hostnotfoundresponse");
             for (String line : response) {
                 if (line != null) {
@@ -60,7 +57,7 @@ public class CheckServerTask extends BukkitRunnable {
                     sender.sendMessage(line);
                 }
             }
-        } else if (status[0] == 3) {
+        } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_REFUSED) {
             List<String> response = plugin.getConfig().getStringList("couldnotconnectresponse");
             for (String line : response) {
                 if (line != null) {
@@ -68,7 +65,7 @@ public class CheckServerTask extends BukkitRunnable {
                     sender.sendMessage(line);
                 }
             }
-        } else if (status[0] == 4) {
+        } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_TIMEOUT) {
             List<String> response = plugin.getConfig().getStringList("timeoutresponse");
             for (String line : response) {
                 if (line != null) {

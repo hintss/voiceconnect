@@ -1,9 +1,9 @@
-package tk.hintss.VoiceConnect;
+package tk.hintss.voiceconnect;
 
 public class ServerStatus {
     private VoiceServerStatuses status;
-    private int currentusers;
-    private int maxusers;
+    private int currentusers = 0;
+    private int maxusers = 0;
     
     public ServerStatus(VoiceServerStatuses status, int currentusers, int maxusers) {
         this.status = status;
@@ -17,6 +17,10 @@ public class ServerStatus {
         if (status == VoiceServerStatuses.OK && currentusers >= maxusers) {
             this.status = VoiceServerStatuses.FULL;
         }
+    }
+    
+    public ServerStatus(VoiceServerStatuses status) {
+        this.status = status;
     }
     
     public VoiceServerStatuses getStatus() {

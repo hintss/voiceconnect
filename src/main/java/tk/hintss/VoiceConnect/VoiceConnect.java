@@ -1,4 +1,4 @@
-package tk.hintss.VoiceConnect;
+package tk.hintss.voiceconnect;
 
 import java.io.IOException;
 import org.bukkit.plugin.java.JavaPlugin;

@@ -1,7 +1,7 @@
 // really really REALLY horrible thing that gets mumble/ts3 current/max user
 // counts using the most horribly thought out methods possible
 
-package tk.hintss.voiceConnect;
+package tk.hintss.voiceconnect;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,13 +20,12 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class QueryServer {
-    public static Integer[] QueryServer(VoiceServers type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
+    public static ServerStatus QueryServer(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
+        ServerStatus status;
+        int currentusers = 0;
+        int maxusers = 0;
         
-        // { error, users, max}
-        // 0 = works, 1=internal error, 2=dns, 3=can't connect, 4=timeout
-        Integer[] response = {1, 0, 0};
-        
-        if (type == VoiceServers.MUMBLE) {
+        if (type == VoiceServerTypes.MUMBLE) {
             DatagramSocket clientsocket = null;
             try {
                 clientsocket = new DatagramSocket();
@@ -48,20 +47,22 @@ public class QueryServer {
                 
                 data.readInt();
                 data.readLong();
-                response[0] = 0;
-                response[1] = data.readInt();
-                response[2] = data.readInt();
+                
+                currentusers = data.readInt();
+                maxusers = data.readInt();
+                
+                status = new ServerStatus(VoiceServerStatuses.OK, currentusers, maxusers);
             } catch (SocketTimeoutException ex) {
-                response[0] = 4;
+                status = new ServerStatus(VoiceServerStatuses.CONNECTION_TIMEOUT);
             } catch (SocketException ex) {
-                response[0] = 1;
+                status = new ServerStatus(VoiceServerStatuses.INTERNAL_ERROR);
             } catch (UnknownHostException ex) {
-                response[0] = 2;
+                status = new ServerStatus(VoiceServerStatuses.HOST_NOT_FOUND);
             } catch (IOException ex) {
-                response[0] = 3;
+                status = new ServerStatus(VoiceServerStatuses.CONNECTION_REFUSED);
             }
-            return response;
-        } else if (type == VoiceServers.TS3) {
+            return status;
+        } else if (type == VoiceServerTypes.TS3) {
             try {
                 InetSocketAddress address = new InetSocketAddress(serverIP, queryport);
                 
@@ -87,26 +88,26 @@ public class QueryServer {
                         if (params[1].contains("virtualserver_port=" + String.valueOf(clientport))) {
                             for (String param : params) {
                                 if (param.startsWith("virtualserver_clientsonline=")) {
-                                    response[1] = java.lang.Integer.parseInt(param.substring(28));
+                                    currentusers = java.lang.Integer.parseInt(param.substring(28));
                                 }
                                 if (param.startsWith("virtualserver_maxclients=")) {
-                                    response[2] = java.lang.Integer.parseInt(param.substring(25));
-                                    response[0] = 0;
+                                    maxusers = java.lang.Integer.parseInt(param.substring(25));
+                                    status = new ServerStatus(VoiceServerStatuses.OK, currentusers, maxusers);
                                     ts3socket.close();
-                                    return response;
+                                    return status;
                                 }
                             }
                         }
                     }
                 }
             } catch (IOException ex) {
-                response[0] = 3;
-                return response;
+                status = new ServerStatus(VoiceServerStatuses.CONNECTION_REFUSED);
+                return status;
             }
             
         } else {
-            response[0] = 1;
-            return response;
+            status = new ServerStatus(VoiceServerStatuses.INTERNAL_ERROR);
+            return status;
         }
     }
 }

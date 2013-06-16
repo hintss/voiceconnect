@@ -1,11 +1,11 @@
-package tk.hintss.voiceConnect;
+package tk.hintss.voiceconnect;
 
 import java.io.IOException;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoiceConnect extends JavaPlugin {
     
-    private VoiceServers type;
+    private VoiceServerTypes type;
     
     public void onEnable(){
         if (this.getConfig().getBoolean("auto-update")) {
@@ -38,15 +38,15 @@ public class VoiceConnect extends JavaPlugin {
             }
         }
         if (this.getConfig().getString("type").equalsIgnoreCase("mumble")) {
-            type = VoiceServers.MUMBLE;
+            type = VoiceServerTypes.MUMBLE;
         }
         if (this.getConfig().getString("type").equalsIgnoreCase("ts3")) {
-            type = VoiceServers.TS3;
+            type = VoiceServerTypes.TS3;
         }
         return true;
     }
     
-    public VoiceServers getType() {
+    public VoiceServerTypes getType() {
         return type;
     }
 }

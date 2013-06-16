@@ -1,4 +1,4 @@
-package tk.hintss.voiceConnect;
+package tk.hintss.voiceconnect;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

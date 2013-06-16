@@ -1,5 +1,5 @@
 package tk.hintss.voiceconnect;
 
-public enum VoiceServers {
+public enum VoiceServerTypes {
     MUMBLE, TS3, VENTRILLO, UNKNOWN
 }

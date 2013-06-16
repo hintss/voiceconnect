@@ -1,11 +1,11 @@
-package tk.hintss.voiceConnect;
+package tk.hintss.voiceconnect;
 
 import org.bukkit.ChatColor;
 
 public class StringSubstitutions {
-    public static String SubstituteString(VoiceConnect plugin, Integer[] status, String line) {
-        line = line.replaceAll("\\$users", String.valueOf(status[1]));
-        line = line.replaceAll("\\$max", String.valueOf(status[2]));
+    public static String SubstituteString(VoiceConnect plugin, ServerStatus status, String line) {
+        line = line.replaceAll("\\$users", String.valueOf(status.getCurrentUsers()));
+        line = line.replaceAll("\\$max", String.valueOf(status.getMaxUsers()));
         if (plugin.getType() == VoiceServerTypes.MUMBLE) {
             line = line.replaceAll("\\$type", "Mumble");
         } else if (plugin.getType() == VoiceServerTypes.TS3) {

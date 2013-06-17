@@ -16,62 +16,29 @@ public class CheckServerTask extends BukkitRunnable {
     
     public void run() {
         ServerQuery status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+        
+        
 
         if (status.getStatus() == VoiceServerStatuses.OK) {
             List<String> response = plugin.getConfig().getStringList("normalresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
         } else if (status.getStatus() == VoiceServerStatuses.EMPTY) {
             List<String> response = plugin.getConfig().getStringList("emptyresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
         } else if (status.getStatus() == VoiceServerStatuses.FULL) {
             List<String> response = plugin.getConfig().getStringList("fullresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
-        } else if (status.getStatus() == VoiceServerStatuses.INTERNAL_ERROR) {
-            List<String> response = plugin.getConfig().getStringList("internalerrorresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
         } else if (status.getStatus() == VoiceServerStatuses.HOST_NOT_FOUND) {
             List<String> response = plugin.getConfig().getStringList("hostnotfoundresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_REFUSED) {
             List<String> response = plugin.getConfig().getStringList("couldnotconnectresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
-            }
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_TIMEOUT) {
             List<String> response = plugin.getConfig().getStringList("timeoutresponse");
-            for (String line : response) {
-                if (line != null) {
-                    line = StringSubstitutions.SubstituteString(status, line);
-                    sender.sendMessage(line);
-                }
+        } else {
+            List<String> response = plugin.getConfig().getStringList("internalerrorresponse");
+        }
+        
+        for (String line : response) {
+            if (line != null) {
+                line = StringSubstitutions.SubstituteString(status, line);
+                sender.sendMessage(line);
             }
         }
     }

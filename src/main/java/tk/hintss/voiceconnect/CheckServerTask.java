@@ -15,7 +15,7 @@ public class CheckServerTask extends BukkitRunnable {
     }
     
     public void run() {
-        ServerStatus status = QueryServer.QueryServer(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+        QueryServer status = new QueryServer(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
 
         if (status.getStatus() == VoiceServerStatuses.OK) {
             List<String> response = plugin.getConfig().getStringList("normalresponse");

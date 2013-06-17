@@ -19,12 +19,13 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-public class QueryServer {
-    public static ServerStatus QueryServer(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
-        ServerStatus status;
-        int currentusers = 0;
-        int maxusers = 0;
-        
+public class ServerQuery {
+    private VoiceServerStatuses status;
+    private int currentusers = 0;
+    private int maxusers = 0;
+    private Long resulttime = 0L;
+    
+    public ServerQuery(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
         if (type == VoiceServerTypes.MUMBLE) {
             DatagramSocket clientsocket = null;
             try {
@@ -48,20 +49,20 @@ public class QueryServer {
                 data.readInt();
                 data.readLong();
                 
-                currentusers = data.readInt();
-                maxusers = data.readInt();
+                this.currentusers = data.readInt();
+                this.maxusers = data.readInt();
                 
-                status = new ServerStatus(VoiceServerStatuses.OK, currentusers, maxusers);
+                this.status = VoiceServerStatuses.OK;
             } catch (SocketTimeoutException ex) {
-                status = new ServerStatus(VoiceServerStatuses.CONNECTION_TIMEOUT);
+                this.status = VoiceServerStatuses.CONNECTION_TIMEOUT;
             } catch (SocketException ex) {
-                status = new ServerStatus(VoiceServerStatuses.INTERNAL_ERROR);
+                this.status = VoiceServerStatuses.INTERNAL_ERROR;
             } catch (UnknownHostException ex) {
-                status = new ServerStatus(VoiceServerStatuses.HOST_NOT_FOUND);
+                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
             } catch (IOException ex) {
-                status = new ServerStatus(VoiceServerStatuses.CONNECTION_REFUSED);
+                this.status = VoiceServerStatuses.CONNECTION_REFUSED;
             }
-            return status;
+            this.resulttime = System.currentTimeMillis();
         } else if (type == VoiceServerTypes.TS3) {
             try {
                 InetSocketAddress address = new InetSocketAddress(serverIP, queryport);
@@ -88,26 +89,43 @@ public class QueryServer {
                         if (params[1].contains("virtualserver_port=" + String.valueOf(clientport))) {
                             for (String param : params) {
                                 if (param.startsWith("virtualserver_clientsonline=")) {
-                                    currentusers = java.lang.Integer.parseInt(param.substring(28));
+                                    this.currentusers = java.lang.Integer.parseInt(param.substring(28));
                                 }
                                 if (param.startsWith("virtualserver_maxclients=")) {
-                                    maxusers = java.lang.Integer.parseInt(param.substring(25));
-                                    status = new ServerStatus(VoiceServerStatuses.OK, currentusers, maxusers);
+                                    this.maxusers = java.lang.Integer.parseInt(param.substring(25));
+                                    this.status = VoiceServerStatuses.OK;
+                                    this.resulttime = System.currentTimeMillis();
                                     ts3socket.close();
-                                    return status;
+                                    return;
                                 }
                             }
                         }
                     }
                 }
             } catch (IOException ex) {
-                status = new ServerStatus(VoiceServerStatuses.CONNECTION_REFUSED);
-                return status;
+                this.status = VoiceServerStatuses.CONNECTION_REFUSED;
+                this.resulttime = System.currentTimeMillis();
             }
             
         } else {
-            status = new ServerStatus(VoiceServerStatuses.INTERNAL_ERROR);
-            return status;
+            this.status = VoiceServerStatuses.INTERNAL_ERROR;
+            this.resulttime = System.currentTimeMillis();
         }
+    }
+    
+    public VoiceServerStatuses getStatus() {
+        return status;
+    }
+    
+    public int getCurrentUsers() {
+        return currentusers;
+    }
+    
+    public int getMaxUsers() {
+        return maxusers;
+    }
+    
+    public Long getResultTime() {
+        return resulttime;
     }
 }

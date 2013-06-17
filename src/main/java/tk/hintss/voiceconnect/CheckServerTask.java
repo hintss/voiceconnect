@@ -21,7 +21,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("normalresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -29,7 +29,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("emptyresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -37,7 +37,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("fullresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -45,7 +45,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("internalerrorresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -53,7 +53,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("hostnotfoundresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -61,7 +61,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("couldnotconnectresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }
@@ -69,7 +69,7 @@ public class CheckServerTask extends BukkitRunnable {
             List<String> response = plugin.getConfig().getStringList("timeoutresponse");
             for (String line : response) {
                 if (line != null) {
-                    line = StringSubstitutions.SubstituteString(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), status, line);
+                    line = StringSubstitutions.SubstituteString(status, line);
                     sender.sendMessage(line);
                 }
             }

@@ -20,6 +20,11 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class ServerQuery {
+    private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
+    private String ip = "localhost";
+    private int clientport = 80;
+    private int queryport = 80;
+    
     private VoiceServerStatuses status = VoiceServerStatuses.INTERNAL_ERROR;
     private int currentusers = 0;
     private int maxusers = 0;
@@ -29,14 +34,19 @@ public class ServerQuery {
         this.resulttime = System.currentTimeMillis();
     }
     
-    public ServerQuery(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
+    public ServerQuery(VoiceServerTypes type, String ip, int clientport, int queryport, String username, String password) {
+        this.type = type;
+        this.ip = ip;
+        this.clientport = clientport;
+        this.queryport = queryport;
+        
         if (type == VoiceServerTypes.MUMBLE) {
             DatagramSocket clientsocket = null;
             try {
                 clientsocket = new DatagramSocket();
                 clientsocket.setSoTimeout(5000);
                 
-                InetAddress ipaddress = InetAddress.getByName(serverIP);
+                InetAddress ipaddress = InetAddress.getByName(ip);
                 
                 byte[] sendData = "\000\000\000\000\000\000\000\000\000\000\000\000".getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipaddress, clientport);
@@ -75,7 +85,7 @@ public class ServerQuery {
             this.resulttime = System.currentTimeMillis();
         } else if (type == VoiceServerTypes.TS3) {
             try {
-                InetSocketAddress address = new InetSocketAddress(serverIP, queryport);
+                InetSocketAddress address = new InetSocketAddress(ip, queryport);
                 
                 Socket ts3socket = new Socket();
                 ts3socket.connect(address, 5000);
@@ -127,6 +137,18 @@ public class ServerQuery {
             this.status = VoiceServerStatuses.INTERNAL_ERROR;
             this.resulttime = System.currentTimeMillis();
         }
+    }
+    
+    public VoiceServerTypes getType() {
+        return type;
+    }
+    
+    public String getIp() {
+        return ip;
+    }
+    
+    public int getPort() {
+        return clientport;
     }
     
     public VoiceServerStatuses getStatus() {

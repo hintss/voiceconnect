@@ -7,7 +7,7 @@ public class ServerQueryTest {
     
     @Test
     public void testInvalidServerType() {
-        ServerQuery instance = new ServerQuery(VoiceServerTypes.UNKNOWN, "", 0, 0, "", "");
+        ServerQuery instance = new ServerQuery(VoiceServerTypes.UNKNOWN, "localhost", 80, 80, "", "");
         VoiceServerStatuses expResult = VoiceServerStatuses.INTERNAL_ERROR;
         VoiceServerStatuses result = instance.getStatus();
         assertEquals("feeding invalid server type into ServerQuery()", expResult, result);

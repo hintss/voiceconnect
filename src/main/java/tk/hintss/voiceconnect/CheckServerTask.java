@@ -17,22 +17,22 @@ public class CheckServerTask extends BukkitRunnable {
     public void run() {
         ServerQuery status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
         
+        List<String> response;
         
-
         if (status.getStatus() == VoiceServerStatuses.OK) {
-            List<String> response = plugin.getConfig().getStringList("normalresponse");
+            response = plugin.getConfig().getStringList("normalresponse");
         } else if (status.getStatus() == VoiceServerStatuses.EMPTY) {
-            List<String> response = plugin.getConfig().getStringList("emptyresponse");
+            response = plugin.getConfig().getStringList("emptyresponse");
         } else if (status.getStatus() == VoiceServerStatuses.FULL) {
-            List<String> response = plugin.getConfig().getStringList("fullresponse");
+            response = plugin.getConfig().getStringList("fullresponse");
         } else if (status.getStatus() == VoiceServerStatuses.HOST_NOT_FOUND) {
-            List<String> response = plugin.getConfig().getStringList("hostnotfoundresponse");
+            response = plugin.getConfig().getStringList("hostnotfoundresponse");
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_REFUSED) {
-            List<String> response = plugin.getConfig().getStringList("couldnotconnectresponse");
+            response = plugin.getConfig().getStringList("couldnotconnectresponse");
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_TIMEOUT) {
-            List<String> response = plugin.getConfig().getStringList("timeoutresponse");
+            response = plugin.getConfig().getStringList("timeoutresponse");
         } else {
-            List<String> response = plugin.getConfig().getStringList("internalerrorresponse");
+            response = plugin.getConfig().getStringList("internalerrorresponse");
         }
         
         for (String line : response) {

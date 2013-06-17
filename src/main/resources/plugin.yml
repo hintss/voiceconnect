@@ -2,7 +2,7 @@ name: VoiceConnect
 description: allows players to query the voice (mumble/ts3) server from in-game
 author: hintss
 main: tk.hintss.voiceConnect.VoiceConnect
-version: 0.7
+version: 0.8
 
 commands:
   voice:

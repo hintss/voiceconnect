@@ -20,10 +20,14 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 public class ServerQuery {
-    private VoiceServerStatuses status;
+    private VoiceServerStatuses status = VoiceServerStatuses.INTERNAL_ERROR;
     private int currentusers = 0;
     private int maxusers = 0;
     private Long resulttime = 0L;
+    
+    public ServerQuery() {
+        this.resulttime = System.currentTimeMillis();
+    }
     
     public ServerQuery(VoiceServerTypes type, String serverIP, Integer clientport, Integer queryport, String username, String password) {
         if (type == VoiceServerTypes.MUMBLE) {
@@ -53,6 +57,12 @@ public class ServerQuery {
                 this.maxusers = data.readInt();
                 
                 this.status = VoiceServerStatuses.OK;
+                if (this.currentusers == 0) {
+                    this.status = VoiceServerStatuses.EMPTY;
+                }
+                if (this.currentusers >= this.maxusers) {
+                    this.status = VoiceServerStatuses.FULL;
+                }
             } catch (SocketTimeoutException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_TIMEOUT;
             } catch (SocketException ex) {
@@ -96,6 +106,12 @@ public class ServerQuery {
                                     this.status = VoiceServerStatuses.OK;
                                     this.resulttime = System.currentTimeMillis();
                                     ts3socket.close();
+                                    if (this.currentusers == 0) {
+                                        this.status = VoiceServerStatuses.EMPTY;
+                                    }
+                                    if (this.currentusers >= this.maxusers) {
+                                        this.status = VoiceServerStatuses.FULL;
+                                    }
                                     return;
                                 }
                             }

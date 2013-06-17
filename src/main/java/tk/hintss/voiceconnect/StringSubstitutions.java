@@ -3,7 +3,7 @@ package tk.hintss.voiceconnect;
 import org.bukkit.ChatColor;
 
 public class StringSubstitutions {
-    public static String SubstituteString(VoiceConnect plugin, QueryServer status, String line) {
+    public static String SubstituteString(VoiceConnect plugin, ServerQuery status, String line) {
         line = line.replaceAll("\\$users", String.valueOf(status.getCurrentUsers()));
         line = line.replaceAll("\\$max", String.valueOf(status.getMaxUsers()));
         if (plugin.getType() == VoiceServerTypes.MUMBLE) {

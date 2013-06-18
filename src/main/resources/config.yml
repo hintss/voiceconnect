@@ -1,5 +1,5 @@
 # You must fill out your voice server IP/type here
-#--------------------------------------------------------#
+#------------------------------------------------------------------------------#
 
 # ip/domain of voice server
 ip: 127.0.0.1
@@ -14,22 +14,23 @@ port: 64738
 type: mumble
 
 # This section is required if you are using ts3
-#--------------------------------------------------------#
+#------------------------------------------------------------------------------#
 
 # The username used by serverQuery (default is "serveradmin")
 queryusername: serveradmin
 
-# The password used by serverQuery (randomly generated on first start)
+# The password used by serverQuery (randomly generated on first start of TS server)
 querypassword: password
 
 # ServerQuery port (10011 by default (THIS IS NOT THE PORT CLIENTS USE))
 queryport: 10011
 
 # Changing this section is optional
-#--------------------------------------------------------#
+#------------------------------------------------------------------------------#
 
-# response to /mumble, /voice, and /ts commands
-# keep the "!!str "" and the ending """, stuff becomes derpy otherwise
+# response to /voice command
+# keep the quotes, stuff becomes derpy otherwise
+#
 # $users is replaced with current users on the voice server
 # $max is replaced with max users on the voice server
 # $type is replaced with either "Mumble" or "TS3", depending on what you put above
@@ -60,4 +61,24 @@ couldnotconnectresponse:
 timeoutresponse:
   - "$C[VoiceConnect] Timeout while connecting to $type server"
 
+# auto-announce
+#------------------------------------------------------------------------------#
+
+# announce interval in ticks
+autoannounce-interval: 6000
+
+# announce message
+# will simply announce nothing if querying voice server failed
+autoannounce-message:
+  - "$A[VoiceConnect] $users/$max users currently on $type!"
+  - "$A[VoiceConnect] Join our $type server at $ip, port $port!"
+  
+# result caching
+#------------------------------------------------------------------------------#
+
+# only checks with the mumble server again if last check was > this many milliseconds
+cachetime: 10000
+
+# auto-update
+#------------------------------------------------------------------------------#
 auto-update: true

@@ -13,8 +13,6 @@ public class ServerQueryTest {
         assertEquals("feeding invalid server type into ServerQuery()", expResult, result);
     }
     
-    /*
-    // TODO fix bug in main code (yes, I know this fails)
     @Test
     public void testDnsError() {
         ServerQuery instance = new ServerQuery(VoiceServerTypes.MUMBLE, "this.is.not.a.domain", 0, 0, "", "");
@@ -22,7 +20,6 @@ public class ServerQueryTest {
         VoiceServerStatuses result = instance.getStatus();
         assertEquals("testing catching of invalid hosts in Mumble mode", expResult, result);
     }
-    */
     
     @Test
     public void testConnectionRefused() {

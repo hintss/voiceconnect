@@ -32,7 +32,6 @@ public class VoiceCommand implements CommandExecutor {
                 }
             } else {
                 if (sender.hasPermission("voiceconnect.use") || !(sender instanceof Player)) {
-                    sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + plugin.getConfig().getString("type") + " server...");
                     BukkitTask CommandTask = new CheckServerTask(sender, plugin).runTaskAsynchronously(plugin);
                 }
             }

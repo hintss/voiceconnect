@@ -46,7 +46,14 @@ public class ServerQuery {
                 clientsocket = new DatagramSocket();
                 clientsocket.setSoTimeout(5000);
                 
-                InetAddress ipaddress = InetAddress.getByName(ip);
+                InetAddress ipaddress = null;
+                
+                try {
+                    ipaddress = InetAddress.getByName(ip);
+                } catch (UnknownHostException ex) {
+                    this.status = VoiceServerStatuses.HOST_NOT_FOUND;
+                    return;
+                }
                 
                 byte[] sendData = "\000\000\000\000\000\000\000\000\000\000\000\000".getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipaddress, clientport);
@@ -77,8 +84,6 @@ public class ServerQuery {
                 this.status = VoiceServerStatuses.CONNECTION_TIMEOUT;
             } catch (SocketException ex) {
                 this.status = VoiceServerStatuses.INTERNAL_ERROR;
-            } catch (UnknownHostException ex) {
-                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
             } catch (IOException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_REFUSED;
             }

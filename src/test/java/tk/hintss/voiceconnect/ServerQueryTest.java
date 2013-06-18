@@ -47,6 +47,27 @@ public class ServerQueryTest {
     */
     
     @Test
+    public void testGetType() {
+        ServerQuery instance = new ServerQuery();
+        VoiceServerTypes result = instance.getType();
+        assertEquals("getStatus()", VoiceServerTypes.UNKNOWN, result);
+    }
+    
+    @Test
+    public void testGetIp() {
+        ServerQuery instance = new ServerQuery();
+        String result = instance.getIp();
+        assertEquals("getStatus()", "localhost", result);
+    }
+    
+    @Test
+    public void testGetPort() {
+        ServerQuery instance = new ServerQuery();
+        int result = instance.getPort();
+        assertEquals("getStatus()", 80, result);
+    }
+    
+    @Test
     public void testGetStatus() {
         ServerQuery instance = new ServerQuery();
         VoiceServerStatuses expResult = VoiceServerStatuses.INTERNAL_ERROR;
@@ -57,17 +78,15 @@ public class ServerQueryTest {
     @Test
     public void testGetCurrentUsers() {
         ServerQuery instance = new ServerQuery();
-        int expResult = 0;
         int result = instance.getCurrentUsers();
-        assertEquals("getMaxusers()", expResult, result);
+        assertEquals("getMaxusers()", 0, result);
     }
     
     @Test
     public void testGetMaxUsers() {
         ServerQuery instance = new ServerQuery();
-        int expResult = 0;
         int result = instance.getMaxUsers();
-        assertEquals("getMaxusers()", expResult, result);
+        assertEquals("getMaxusers()", 0, result);
     }
 
     @Test

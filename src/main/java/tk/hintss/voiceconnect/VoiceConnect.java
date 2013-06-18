@@ -5,13 +5,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoiceConnect extends JavaPlugin {
     
-    private VoiceServerTypes type;
+    private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
+    private ServerQuery cachedresult;
     
     public void onEnable(){
+        this.saveDefaultConfig();
         if (this.getConfig().getBoolean("auto-update")) {
             Updater updater = new Updater(this, "mumbleconnect", this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
-        this.saveDefaultConfig();
         if (!verifyConfig()) {
             getLogger().severe("invalid config, unloading plugin");
             getServer().getPluginManager().disablePlugin(this);
@@ -19,6 +20,7 @@ public class VoiceConnect extends JavaPlugin {
         getCommand("voice").setExecutor(new VoiceCommand(this));
         getCommand("mumble").setExecutor(new VoiceCommand(this));
         getCommand("ts").setExecutor(new VoiceCommand(this));
+        getCommand("teamspeak").setExecutor(new VoiceCommand(this));
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();
@@ -48,5 +50,13 @@ public class VoiceConnect extends JavaPlugin {
     
     public VoiceServerTypes getType() {
         return type;
+    }
+    
+    public ServerQuery getCached() {
+        return cachedresult;
+    }
+    
+    public void setCached(ServerQuery result) {
+        this.cachedresult = result;
     }
 }

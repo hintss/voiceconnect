@@ -20,6 +20,7 @@ public class VoiceConnect extends JavaPlugin {
         getCommand("voice").setExecutor(new VoiceCommand(this));
         getCommand("mumble").setExecutor(new VoiceCommand(this));
         getCommand("ts").setExecutor(new VoiceCommand(this));
+        getCommand("teamspeak").setExecutor(new VoiceCommand(this));
         try {
             Metrics metrics = new Metrics(this);
             metrics.start();

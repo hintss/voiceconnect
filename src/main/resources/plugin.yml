@@ -11,6 +11,8 @@ commands:
     description: alias of /voice
   ts:
     description: alias of /voice
+  teamspeak:
+    description: alias of /voice
     
 permissions:
   voiceconnect.*:

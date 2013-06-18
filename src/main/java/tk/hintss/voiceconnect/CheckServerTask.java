@@ -1,6 +1,7 @@
 package tk.hintss.voiceconnect;
 
 import java.util.List;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -15,8 +16,15 @@ public class CheckServerTask extends BukkitRunnable {
     }
     
     public void run() {
-        ServerQuery status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
-        
+        ServerQuery status = new ServerQuery();
+        if (plugin.getCached().getResultTime() + plugin.getConfig().getInt("cachetime") < System.currentTimeMillis()) {
+            sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + plugin.getConfig().getString("type") + " server...");
+            status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+        } else {
+            sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] using cached response from " + String.ValueOf((System.currentTimeMillis() - plugin.getCached().getResultTime())/1000) + " seconds ago.");
+            status = plugin.getCached();
+        }
+            
         List<String> response;
         
         if (status.getStatus() == VoiceServerStatuses.OK) {

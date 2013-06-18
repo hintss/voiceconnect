@@ -5,13 +5,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoiceConnect extends JavaPlugin {
     
-    private VoiceServerTypes type;
+    private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
+    private ServerQuery cachedresult;
     
     public void onEnable(){
+        this.saveDefaultConfig();
         if (this.getConfig().getBoolean("auto-update")) {
             Updater updater = new Updater(this, "mumbleconnect", this.getFile(), Updater.UpdateType.DEFAULT, true);
         }
-        this.saveDefaultConfig();
         if (!verifyConfig()) {
             getLogger().severe("invalid config, unloading plugin");
             getServer().getPluginManager().disablePlugin(this);
@@ -48,5 +49,13 @@ public class VoiceConnect extends JavaPlugin {
     
     public VoiceServerTypes getType() {
         return type;
+    }
+    
+    public ServerQuery getCached() {
+        return cachedresult;
+    }
+    
+    public void setCached(ServerQuery result) {
+        this.cachedresult = result;
     }
 }

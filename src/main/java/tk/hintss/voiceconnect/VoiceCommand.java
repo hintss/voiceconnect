@@ -14,7 +14,6 @@ public class VoiceCommand implements CommandExecutor {
             this.plugin = plugin;
     }
 
-    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("mumble") || cmd.getName().equalsIgnoreCase("voice") || cmd.getName().equalsIgnoreCase("ts")) {
             if (args.length == 1) {

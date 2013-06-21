@@ -5,46 +5,48 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VoiceConnect extends JavaPlugin {
     
+    private static VoiceConnect instance;
     private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
-    private ServerQuery cachedresult;
+    private ServerQuery result;
     
-    public void onEnable(){
-        this.saveDefaultConfig();
-        if (this.getConfig().getBoolean("auto-update")) {
-            Updater updater = new Updater(this, "mumbleconnect", this.getFile(), Updater.UpdateType.DEFAULT, true);
+    @Override
+    public void onEnable() {
+        instance = this;
+        saveDefaultConfig();
+        if (getConfig().getBoolean("auto-update")) {
+            new Updater("mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);
         }
-        if (!verifyConfig()) {
-            getLogger().severe("invalid config, unloading plugin");
+        if (!loadConfig()) {
+            getLogger().severe("Invalid configuration, disabling plugin! D:");
             getServer().getPluginManager().disablePlugin(this);
+            return;
         }
-        getCommand("voice").setExecutor(new VoiceCommand(this));
-        getCommand("mumble").setExecutor(new VoiceCommand(this));
-        getCommand("ts").setExecutor(new VoiceCommand(this));
-        getCommand("teamspeak").setExecutor(new VoiceCommand(this));
+        getCommand("voice").setExecutor(new VoiceCommand());
+        getCommand("mumble").setExecutor(new VoiceCommand());
+        getCommand("ts").setExecutor(new VoiceCommand());
+        getCommand("teamspeak").setExecutor(new VoiceCommand());
         try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            getLogger().warning("stats no werk :(");
+            new Metrics(this).start();
+        } catch (IOException ex) {
+            getLogger().warning("Failed to start MCStats! :(");
         }
     }
     
+    @Override
     public void onDisable() {
         getServer().getScheduler().cancelTasks(this);
+        instance = null;
     }
     
-    public Boolean verifyConfig() {
-        if (!this.getConfig().getString("type").equalsIgnoreCase("mumble")) {
-            if (!this.getConfig().getString("type").equalsIgnoreCase("ts3")) {
-                return false;
-            }
+    public void setCached(ServerQuery result) {
+        this.result = result;
+    }
+    
+    private boolean loadConfig() {
+        if (!getConfig().getString("type").equalsIgnoreCase("mumble") && !getConfig().getString("type").equalsIgnoreCase("ts3")) {
+            return false;
         }
-        if (this.getConfig().getString("type").equalsIgnoreCase("mumble")) {
-            type = VoiceServerTypes.MUMBLE;
-        }
-        if (this.getConfig().getString("type").equalsIgnoreCase("ts3")) {
-            type = VoiceServerTypes.TS3;
-        }
+        type = getConfig().getString("type").equalsIgnoreCase("mumble") ? VoiceServerTypes.MUMBLE : VoiceServerTypes.TS3;w
         return true;
     }
     
@@ -53,10 +55,10 @@ public class VoiceConnect extends JavaPlugin {
     }
     
     public ServerQuery getCached() {
-        return cachedresult;
+        return result;
     }
     
-    public void setCached(ServerQuery result) {
-        this.cachedresult = result;
+    public static VoiceConnect getInstance() {
+        return instance;
     }
 }

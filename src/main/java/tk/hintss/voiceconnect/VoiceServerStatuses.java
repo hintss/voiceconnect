@@ -1,7 +1,6 @@
 package tk.hintss.voiceconnect;
 
 public enum VoiceServerStatuses {
-
     OK, 
     FULL,
     EMPTY, 

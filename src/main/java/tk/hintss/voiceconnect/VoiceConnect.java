@@ -14,12 +14,7 @@ public class VoiceConnect extends JavaPlugin {
         instance = this;
         saveDefaultConfig();
         if (getConfig().getBoolean("auto-update")) {
-            new Updater("mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);
-        }
-        if (!loadConfig()) {
-            getLogger().severe("Invalid configuration, disabling plugin! D:");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+            new Updater(this, "mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);
         }
         getCommand("voice").setExecutor(new VoiceCommand());
         getCommand("mumble").setExecutor(new VoiceCommand());
@@ -28,7 +23,7 @@ public class VoiceConnect extends JavaPlugin {
         try {
             new Metrics(this).start();
         } catch (IOException ex) {
-            getLogger().warning("Failed to start MCStats! :(");
+            getLogger().warning("Stats no werk! D:");
         }
     }
     
@@ -42,12 +37,8 @@ public class VoiceConnect extends JavaPlugin {
         this.result = result;
     }
     
-    private boolean loadConfig() {
-        if (!getConfig().getString("type").equalsIgnoreCase("mumble") && !getConfig().getString("type").equalsIgnoreCase("ts3")) {
-            return false;
-        }
-        type = getConfig().getString("type").equalsIgnoreCase("mumble") ? VoiceServerTypes.MUMBLE : VoiceServerTypes.TS3;w
-        return true;
+    public void loadConfig() {
+        type = getConfig().getString("type").equalsIgnoreCase("mumble") ? VoiceServerTypes.MUMBLE : VoiceServerTypes.TS3;
     }
     
     public VoiceServerTypes getType() {

@@ -15,7 +15,7 @@ public class VoiceCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("mumble") || cmd.getName().equalsIgnoreCase("voice") || cmd.getName().equalsIgnoreCase("ts")) {
+        if (cmd.getName().equalsIgnoreCase("mumble") || cmd.getName().equalsIgnoreCase("voice") || cmd.getName().equalsIgnoreCase("ts") || cmd.getName().equalsIgnoreCase("teamspeak")) {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     if (sender.hasPermission("voiceconnect.reload") || !(sender instanceof Player)) {
@@ -31,7 +31,9 @@ public class VoiceCommand implements CommandExecutor {
                 }
             } else {
                 if (sender.hasPermission("voiceconnect.use") || !(sender instanceof Player)) {
-                    BukkitTask CommandTask = new CheckServerTask(sender, plugin).runTaskAsynchronously(plugin);
+                    new CheckServerTask(sender, plugin).runTaskAsynchronously(plugin);
+                } else {
+                	sender.sendMessage(ChatColor.RED + "[VoiceConnect] You do not have permission to use this!");
                 }
             }
             return true;

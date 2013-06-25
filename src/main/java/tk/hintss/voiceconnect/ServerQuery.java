@@ -48,12 +48,7 @@ public class ServerQuery {
                 
                 InetAddress ipaddress = null;
                 
-                try {
-                    ipaddress = InetAddress.getByName(ip);
-                } catch (UnknownHostException ex) {
-                    this.status = VoiceServerStatuses.HOST_NOT_FOUND;
-                    return;
-                }
+                ipaddress = InetAddress.getByName(ip);
                 
                 byte[] sendData = "\000\000\000\000\000\000\000\000\000\000\000\000".getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipaddress, clientport);
@@ -82,6 +77,8 @@ public class ServerQuery {
                 }
             } catch (SocketTimeoutException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_TIMEOUT;
+            } catch (UnknownHostException ex) {
+                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
             } catch (SocketException ex) {
                 this.status = VoiceServerStatuses.INTERNAL_ERROR;
             } catch (IOException ex) {
@@ -133,10 +130,12 @@ public class ServerQuery {
                         }
                     }
                 }
+            } catch (UnknownHostException ex) {
+                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
             } catch (IOException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_REFUSED;
-                this.resulttime = System.currentTimeMillis();
             }
+            this.resulttime = System.currentTimeMillis();
             
         } else {
             this.status = VoiceServerStatuses.INTERNAL_ERROR;

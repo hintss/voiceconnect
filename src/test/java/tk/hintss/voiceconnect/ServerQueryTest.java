@@ -13,7 +13,6 @@ public class ServerQueryTest {
         assertEquals("feeding invalid server type into ServerQuery()", expResult, result);
     }
     
-    /* test works in IDE but fails in jenkins :S
     @Test
     public void testDnsError() {
         ServerQuery instance = new ServerQuery(VoiceServerTypes.MUMBLE, "this.is.not.a.domain", 0, 0, "", "");
@@ -21,7 +20,6 @@ public class ServerQueryTest {
         VoiceServerStatuses result = instance.getStatus();
         assertEquals("testing catching of invalid hosts in Mumble mode", expResult, result);
     }
-    */
     
     @Test
     public void testConnectionRefused() {
@@ -33,7 +31,7 @@ public class ServerQueryTest {
         assertEquals("testing connection refused in TS3", expResult, result);
     }
     
-    /* fails
+    /* fails, willfix
     @Test
     public void testMumbleTimeout() {
         // 4 is a unasigned port :P

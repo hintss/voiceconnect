@@ -33,10 +33,6 @@ public class VoiceConnect extends JavaPlugin {
         instance = null;
     }
     
-    public void setCached(ServerQuery result) {
-        this.result = result;
-    }
-    
     public void loadConfig() {
         type = getConfig().getString("type").equalsIgnoreCase("mumble") ? VoiceServerTypes.MUMBLE : VoiceServerTypes.TS3;
     }
@@ -45,8 +41,12 @@ public class VoiceConnect extends JavaPlugin {
         return type;
     }
     
-    public ServerQuery getCached() {
+    public synchronized ServerQuery getCached() {
         return result;
+    }
+    
+    public synchronized void setCached(ServerQuery result) {
+        this.result = result;
     }
     
     public static VoiceConnect getInstance() {

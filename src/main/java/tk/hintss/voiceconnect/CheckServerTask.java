@@ -1,10 +1,8 @@
 package tk.hintss.voiceconnect;
 
 import java.util.List;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
-
 
 public class CheckServerTask extends BukkitRunnable {
     private final VoiceConnect plugin;
@@ -19,6 +17,8 @@ public class CheckServerTask extends BukkitRunnable {
         ServerQuery status = new ServerQuery();
         status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
 
+        plugin.setCached(status);
+        
         List<String> response;
         
         if (status.getStatus() == VoiceServerStatuses.OK) {

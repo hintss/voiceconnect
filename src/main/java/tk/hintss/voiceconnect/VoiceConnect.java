@@ -41,7 +41,7 @@ public class VoiceConnect extends JavaPlugin {
         return type;
     }
     
-    public synchronized ServerQuery getCached() {
+    public ServerQuery getCached() {
         return result;
     }
     

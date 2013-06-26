@@ -23,7 +23,6 @@ public class ServerQuery {
     private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
     private String ip = "localhost";
     private int clientport = 0;
-    private int queryport = 0;
     
     private VoiceServerStatuses status = VoiceServerStatuses.INTERNAL_ERROR;
     private int currentusers = 0;
@@ -38,7 +37,6 @@ public class ServerQuery {
         this.type = type;
         this.ip = ip;
         this.clientport = clientport;
-        this.queryport = queryport;
         
         if (type == VoiceServerTypes.MUMBLE) {
             DatagramSocket clientsocket = null;

@@ -22,8 +22,8 @@ import java.net.UnknownHostException;
 public class ServerQuery {
     private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
     private String ip = "localhost";
-    private int clientport = 80;
-    private int queryport = 80;
+    private int clientport = 0;
+    private int queryport = 0;
     
     private VoiceServerStatuses status = VoiceServerStatuses.INTERNAL_ERROR;
     private int currentusers = 0;

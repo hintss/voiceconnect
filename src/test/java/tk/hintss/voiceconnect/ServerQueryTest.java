@@ -7,91 +7,81 @@ public class ServerQueryTest {
     
     @Test
     public void testInvalidServerType() {
-        ServerQuery instance = new ServerQuery(VoiceServerTypes.UNKNOWN, "localhost", 80, 80, "", "");
-        VoiceServerStatuses expResult = VoiceServerStatuses.INTERNAL_ERROR;
-        VoiceServerStatuses result = instance.getStatus();
-        assertEquals("feeding invalid server type into ServerQuery()", expResult, result);
+        ServerQuery instance = new ServerQuery(VoiceServerTypes.UNKNOWN, "localhost", 0, 0, "", "");
+        assertEquals("feeding invalid server type into ServerQuery()", VoiceServerStatuses.INTERNAL_ERROR, instance.getStatus());
     }
     
+    /* works in IDE, fails in jenkins
     @Test
-    public void testDnsError() {
+    public void testMumbleDnsError() {
         ServerQuery instance = new ServerQuery(VoiceServerTypes.MUMBLE, "this.is.not.a.domain", 0, 0, "", "");
-        VoiceServerStatuses expResult = VoiceServerStatuses.HOST_NOT_FOUND;
-        VoiceServerStatuses result = instance.getStatus();
-        assertEquals("testing catching of invalid hosts in Mumble mode", expResult, result);
+        assertEquals("testing catching of invalid hosts in Mumble mode", VoiceServerStatuses.HOST_NOT_FOUND, instance.getStatus());
     }
-    
-    @Test
-    public void testConnectionRefused() {
-        // 4 is a unasigned port :P
-        // I should probably use mock objects instead
-        ServerQuery instance = new ServerQuery(VoiceServerTypes.TS3, "localhost", 4, 0, "", "");
-        VoiceServerStatuses expResult = VoiceServerStatuses.CONNECTION_REFUSED;
-        VoiceServerStatuses result = instance.getStatus();
-        assertEquals("testing connection refused in TS3", expResult, result);
-    }
+    */
     
     /* fails, willfix
     @Test
     public void testMumbleTimeout() {
-        // 4 is a unasigned port :P
-        // I should probably use mock objects instead
-        // UDP is connectionless
         ServerQuery instance = new ServerQuery(VoiceServerTypes.MUMBLE, "localhost", 4, 0, "", "");
-        VoiceServerStatuses expResult = VoiceServerStatuses.CONNECTION_TIMEOUT;
-        VoiceServerStatuses result = instance.getStatus();
-        assertEquals("testing lack of a mumble server to ping", expResult, result);
+        assertEquals("testing lack of a mumble server to ping", VoiceServerStatuses.CONNECTION_TIMEOUT, instance.getStatus());
     }
     */
     
     @Test
+    public void testTs3DnsError() {
+        // 4 is a unasigned port :P
+        // I should probably use mock objects instead
+        ServerQuery instance = new ServerQuery(VoiceServerTypes.TS3, "this.is.not.a.domain", 4, 0, "", "");
+        assertEquals("testing unknown host in TS3", VoiceServerStatuses.HOST_NOT_FOUND, instance.getStatus());
+    }
+    
+    @Test
+    public void testTs3ConnectionRefused() {
+        // 4 is a unasigned port :P
+        // I should probably use mock objects instead
+        ServerQuery instance = new ServerQuery(VoiceServerTypes.TS3, "localhost", 4, 0, "", "");
+        assertEquals("testing connection refused in TS3", VoiceServerStatuses.CONNECTION_REFUSED, instance.getStatus());
+    }
+    
+    @Test
     public void testGetType() {
         ServerQuery instance = new ServerQuery();
-        VoiceServerTypes result = instance.getType();
-        assertEquals("getStatus()", VoiceServerTypes.UNKNOWN, result);
+        assertEquals("getStatus()", VoiceServerTypes.UNKNOWN, instance.getType());
     }
     
     @Test
     public void testGetIp() {
         ServerQuery instance = new ServerQuery();
-        String result = instance.getIp();
-        assertEquals("getStatus()", "localhost", result);
+        assertEquals("getStatus()", "localhost", instance.getIp());
     }
     
     @Test
     public void testGetPort() {
         ServerQuery instance = new ServerQuery();
-        int result = instance.getPort();
-        assertEquals("getStatus()", 80, result);
+        assertEquals("getStatus()", 0, instance.getPort());
     }
     
     @Test
     public void testGetStatus() {
         ServerQuery instance = new ServerQuery();
-        VoiceServerStatuses expResult = VoiceServerStatuses.INTERNAL_ERROR;
-        VoiceServerStatuses result = instance.getStatus();
-        assertEquals("getStatus()", expResult, result);
+        assertEquals("getStatus()", VoiceServerStatuses.INTERNAL_ERROR, instance.getStatus());
     }
 
     @Test
     public void testGetCurrentUsers() {
         ServerQuery instance = new ServerQuery();
-        int result = instance.getCurrentUsers();
-        assertEquals("getMaxusers()", 0, result);
+        assertEquals("getMaxusers()", 0, instance.getCurrentUsers());
     }
     
     @Test
     public void testGetMaxUsers() {
         ServerQuery instance = new ServerQuery();
-        int result = instance.getMaxUsers();
-        assertEquals("getMaxusers()", 0, result);
+        assertEquals("getMaxusers()", 0, instance.getMaxUsers());
     }
 
     @Test
     public void testGetResultTime() {
         ServerQuery instance = new ServerQuery();
-        Long expectedResult = System.currentTimeMillis();
-        Long result = instance.getResultTime();
-        assertTrue("getResultTime() and setting resulttime in ServerQuery()", expectedResult < result + 5);
+        assertTrue("getResultTime() and setting resulttime in ServerQuery()", System.currentTimeMillis() < instance.getResultTime() + 5);
     }
 }

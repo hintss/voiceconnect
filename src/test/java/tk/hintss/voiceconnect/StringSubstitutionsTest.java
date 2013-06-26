@@ -9,51 +9,37 @@ public class StringSubstitutionsTest {
     public void testSubstituteMumble() {
         ServerQuery mockStatus = PowerMockito.mock(ServerQuery.class);
         PowerMockito.when(mockStatus.getType()).thenReturn(VoiceServerTypes.MUMBLE);
-        
-        String expResult = "Mumble";
-        String result = StringSubstitutions.SubstituteString(mockStatus, "$type");
-        assertEquals("substitution of $type with \"Mumble\"", expResult, result);
+        assertEquals("substitution of $type with \"Mumble\"", "Mumble", StringSubstitutions.SubstituteString(mockStatus, "$type"));
     }
     
     @Test
     public void testSubstituteTs3() {
         ServerQuery mockStatus = PowerMockito.mock(ServerQuery.class);
         PowerMockito.when(mockStatus.getType()).thenReturn(VoiceServerTypes.TS3);
-        
-        String expResult = "TS3";
-        String result = StringSubstitutions.SubstituteString(mockStatus, "$type");
-        assertEquals("substitution of $type with \"Mumble\"", expResult, result);
+        assertEquals("substitution of $type with \"Mumble\"", "TS3", StringSubstitutions.SubstituteString(mockStatus, "$type"));
     }
     
     @Test
     public void testSubstituteIp() {
         ServerQuery status = new ServerQuery();
-        String expResult = "localhost";
-        String result = StringSubstitutions.SubstituteString(status, "$ip");
-        assertEquals("substitution of $ip with inputted ip", expResult, result);
+        assertEquals("substitution of $ip with inputted ip", "localhost", StringSubstitutions.SubstituteString(status, "$ip"));
     }
     
     @Test
     public void testSubstitutePort() {
         ServerQuery status = new ServerQuery();
-        String expResult = "80";
-        String result = StringSubstitutions.SubstituteString(status, "$port");
-        assertEquals("substitution of $port with inputted port", expResult, result);
+        assertEquals("substitution of $port with inputted port", "0", StringSubstitutions.SubstituteString(status, "$port"));
     }
     
     @Test
     public void testSubstituteUsers() {
         ServerQuery status = new ServerQuery();
-        String expResult = "0";
-        String result = StringSubstitutions.SubstituteString(status, "$users");
-        assertEquals("substitution of $users with user count", expResult, result);
+        assertEquals("substitution of $users with user count", "0", StringSubstitutions.SubstituteString(status, "$users"));
     }
     
     @Test
     public void testSubstituteMaxUsers() {
         ServerQuery status = new ServerQuery();
-        String expResult = "0";
-        String result = StringSubstitutions.SubstituteString(status, "$max");
-        assertEquals("substitution of $max with max user count", expResult, result);
+        assertEquals("substitution of $max with max user count", "0", StringSubstitutions.SubstituteString(status, "$max"));
     }
 }

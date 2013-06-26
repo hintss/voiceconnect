@@ -7,7 +7,7 @@ public class VoiceConnect extends JavaPlugin {
     
     private static VoiceConnect instance;
     private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
-    private ServerQuery result;
+    private ServerQuery result = new ServerQuery();
     
     @Override
     public void onEnable() {

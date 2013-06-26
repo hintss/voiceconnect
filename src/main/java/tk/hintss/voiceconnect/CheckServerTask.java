@@ -17,14 +17,8 @@ public class CheckServerTask extends BukkitRunnable {
     
     public void run() {
         ServerQuery status = new ServerQuery();
-        if (plugin.getCached().getResultTime() + plugin.getConfig().getInt("cachetime") < System.currentTimeMillis()) {
-            sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + plugin.getConfig().getString("type") + " server...");
-            status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
-        } else {
-            sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] using cached response from " + String.valueOf((System.currentTimeMillis() - plugin.getCached().getResultTime())/1000) + " seconds ago.");
-            status = plugin.getCached();
-        }
-            
+        status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+
         List<String> response;
         
         if (status.getStatus() == VoiceServerStatuses.OK) {

@@ -9,10 +9,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class VoiceCommand implements CommandExecutor {
- 
-    public VoiceCommand() {
-    }
-
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("mumble") || cmd.getName().equalsIgnoreCase("voice") || cmd.getName().equalsIgnoreCase("ts") || cmd.getName().equalsIgnoreCase("teamspeak")) {
             if (args.length == 1) {
@@ -27,13 +23,12 @@ public class VoiceCommand implements CommandExecutor {
                 }
             } else {
                 if (sender.hasPermission("voiceconnect.use") || !(sender instanceof Player)) {
-                    ServerQuery status = new ServerQuery();
                     if (VoiceConnect.getInstance().getCached().getResultTime() + VoiceConnect.getInstance().getConfig().getInt("cachetime") < System.currentTimeMillis()) {
                         sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + VoiceConnect.getInstance().getConfig().getString("type") + " server...");
                         new CheckServerTask(sender, VoiceConnect.getInstance()).runTaskAsynchronously(VoiceConnect.getInstance());
                     } else {
                         sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] using cached response from " + String.valueOf((System.currentTimeMillis() - VoiceConnect.getInstance().getCached().getResultTime())/1000) + " seconds ago.");
-                        status = VoiceConnect.getInstance().getCached();
+                        ServerQuery status = VoiceConnect.getInstance().getCached();
                         
                         List<String> response;
                         
@@ -59,7 +54,7 @@ public class VoiceCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                	sender.sendMessage(ChatColor.RED + "[VoiceConnect] You do not have permission to use this!");
+                    sender.sendMessage(ChatColor.RED + "[VoiceConnect] You do not have permission to use this!");
                 }
             }
             return true;

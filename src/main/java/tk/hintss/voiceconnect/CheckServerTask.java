@@ -15,8 +15,7 @@ public class CheckServerTask extends BukkitRunnable {
     }
     
     public void run() {
-        ServerQuery status = new ServerQuery();
-        status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
+        ServerQuery status = new ServerQuery(plugin.getType(), plugin.getConfig().getString("ip"), plugin.getConfig().getInt("port"), plugin.getConfig().getInt("queryport"), plugin.getConfig().getString("queryusername"), plugin.getConfig().getString("querypassword"));
 
         plugin.setCached(status);
         

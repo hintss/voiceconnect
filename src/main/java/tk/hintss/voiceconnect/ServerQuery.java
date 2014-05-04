@@ -38,14 +38,11 @@ public class ServerQuery {
         this.clientport = clientport;
         
         if (type == VoiceServerTypes.MUMBLE) {
-            DatagramSocket clientsocket = null;
             try {
-                clientsocket = new DatagramSocket();
+                DatagramSocket clientsocket = new DatagramSocket();
                 clientsocket.setSoTimeout(5000);
                 
-                InetAddress ipaddress = null;
-                
-                ipaddress = InetAddress.getByName(ip);
+                InetAddress ipaddress = InetAddress.getByName(ip);
                 
                 byte[] sendData = "\000\000\000\000\000\000\000\000\000\000\000\000".getBytes();
                 DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipaddress, clientport);

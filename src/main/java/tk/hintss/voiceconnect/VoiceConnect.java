@@ -1,7 +1,8 @@
 package tk.hintss.voiceconnect;
 
-import java.io.IOException;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
 
 public class VoiceConnect extends JavaPlugin {
     
@@ -13,13 +14,16 @@ public class VoiceConnect extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+
         if (getConfig().getBoolean("auto-update")) {
             new Updater(this, "mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);
         }
+
         getCommand("voice").setExecutor(new VoiceCommand());
         getCommand("mumble").setExecutor(new VoiceCommand());
         getCommand("ts").setExecutor(new VoiceCommand());
         getCommand("teamspeak").setExecutor(new VoiceCommand());
+
         try {
             new Metrics(this).start();
         } catch (IOException ex) {
@@ -34,14 +38,14 @@ public class VoiceConnect extends JavaPlugin {
     }
     
     public void loadConfig() {
-        type = getConfig().getString("type").equalsIgnoreCase("mumble") ? VoiceServerTypes.MUMBLE : VoiceServerTypes.TS3;
+        type = VoiceServerTypes.valueOf(getConfig().getString("type").toUpperCase());
     }
     
     public VoiceServerTypes getType() {
         return type;
     }
     
-    public ServerQuery getCached() {
+    public synchronized ServerQuery getCached() {
         return result;
     }
     

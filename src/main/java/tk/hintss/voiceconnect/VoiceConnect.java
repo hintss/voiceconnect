@@ -14,6 +14,7 @@ public class VoiceConnect extends JavaPlugin {
     public void onEnable() {
         instance = this;
         saveDefaultConfig();
+        loadConfig();
 
         if (getConfig().getBoolean("auto-update")) {
             new Updater(this, "mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);

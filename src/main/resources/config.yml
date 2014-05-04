@@ -11,7 +11,7 @@ port: 64738
 
 # type of voice server - currently only mumble/murmur supported
 # just put in either "mumble" or "ts3"
-type: mumble
+type: unknown
 
 # This section is required if you are using ts3
 #------------------------------------------------------------------------------#

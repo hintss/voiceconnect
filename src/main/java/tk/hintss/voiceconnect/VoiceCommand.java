@@ -22,7 +22,7 @@ public class VoiceCommand implements CommandExecutor {
                 }
             } else {
                 if (sender.hasPermission("voiceconnect.use") || !(sender instanceof Player)) {
-                    if (VoiceConnect.getInstance().getCached() != null && VoiceConnect.getInstance().getCached().getResultTime() + VoiceConnect.getInstance().getConfig().getInt("cachetime") < System.currentTimeMillis()) {
+                    if (VoiceConnect.getInstance().getCached() == null || VoiceConnect.getInstance().getCached().getResultTime() + VoiceConnect.getInstance().getConfig().getInt("cachetime") < System.currentTimeMillis()) {
                         sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + VoiceConnect.getInstance().getConfig().getString("type") + " server...");
                         new CheckServerTask(sender, VoiceConnect.getInstance()).runTaskAsynchronously(VoiceConnect.getInstance());
                     } else {

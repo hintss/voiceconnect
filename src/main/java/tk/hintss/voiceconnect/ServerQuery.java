@@ -75,7 +75,7 @@ public class ServerQuery {
             } catch (SocketTimeoutException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_TIMEOUT;
             } catch (UnknownHostException ex) {
-                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
+                this.status = VoiceServerStatuses.CONNECTION_REFUSED;
             } catch (SocketException ex) {
                 this.status = VoiceServerStatuses.INTERNAL_ERROR;
             } catch (IOException ex) {
@@ -128,7 +128,7 @@ public class ServerQuery {
                     }
                 }
             } catch (UnknownHostException ex) {
-                this.status = VoiceServerStatuses.HOST_NOT_FOUND;
+                this.status = VoiceServerStatuses.CONNECTION_REFUSED;
             } catch (IOException ex) {
                 this.status = VoiceServerStatuses.CONNECTION_REFUSED;
             }

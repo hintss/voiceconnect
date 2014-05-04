@@ -1,12 +1,12 @@
 package tk.hintss.voiceconnect;
 
-import java.util.List;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class VoiceCommand implements CommandExecutor {
  
@@ -43,8 +43,6 @@ public class VoiceCommand implements CommandExecutor {
                             response = VoiceConnect.getInstance().getConfig().getStringList("emptyresponse");
                         } else if (status.getStatus() == VoiceServerStatuses.FULL) {
                             response = VoiceConnect.getInstance().getConfig().getStringList("fullresponse");
-                        } else if (status.getStatus() == VoiceServerStatuses.HOST_NOT_FOUND) {
-                            response = VoiceConnect.getInstance().getConfig().getStringList("hostnotfoundresponse");
                         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_REFUSED) {
                             response = VoiceConnect.getInstance().getConfig().getStringList("couldnotconnectresponse");
                         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_TIMEOUT) {

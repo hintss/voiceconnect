@@ -1,8 +1,9 @@
 package tk.hintss.voiceconnect;
 
-import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.List;
 
 public class CheckServerTask extends BukkitRunnable {
     private final VoiceConnect plugin;
@@ -27,8 +28,6 @@ public class CheckServerTask extends BukkitRunnable {
             response = plugin.getConfig().getStringList("emptyresponse");
         } else if (status.getStatus() == VoiceServerStatuses.FULL) {
             response = plugin.getConfig().getStringList("fullresponse");
-        } else if (status.getStatus() == VoiceServerStatuses.HOST_NOT_FOUND) {
-            response = plugin.getConfig().getStringList("hostnotfoundresponse");
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_REFUSED) {
             response = plugin.getConfig().getStringList("couldnotconnectresponse");
         } else if (status.getStatus() == VoiceServerStatuses.CONNECTION_TIMEOUT) {

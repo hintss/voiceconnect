@@ -1,11 +1,10 @@
 package tk.hintss.voiceconnect;
 
 public enum VoiceServerStatuses {
-    OK, 
+    OK,
     FULL,
-    EMPTY, 
-    INTERNAL_ERROR, 
-    HOST_NOT_FOUND, 
-    CONNECTION_REFUSED, 
+    EMPTY,
+    INTERNAL_ERROR,
+    CONNECTION_REFUSED,
     CONNECTION_TIMEOUT;
 }

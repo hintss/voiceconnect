@@ -1,5 +1,4 @@
-// really really REALLY horrible thing that gets mumble/ts3 current/max user
-// counts using the most horribly thought out methods possible
+// it's bad, deal with it
 
 package tk.hintss.voiceconnect;
 

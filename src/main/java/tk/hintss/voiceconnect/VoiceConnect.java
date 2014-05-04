@@ -8,7 +8,7 @@ public class VoiceConnect extends JavaPlugin {
     
     private static VoiceConnect instance;
     private VoiceServerTypes type = VoiceServerTypes.UNKNOWN;
-    private ServerQuery result = new ServerQuery();
+    private ServerQuery result;
     
     @Override
     public void onEnable() {
@@ -39,7 +39,9 @@ public class VoiceConnect extends JavaPlugin {
     }
     
     public void loadConfig() {
+        reloadConfig();
         type = VoiceServerTypes.valueOf(getConfig().getString("type").toUpperCase());
+        result = null;
     }
     
     public VoiceServerTypes getType() {

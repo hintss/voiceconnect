@@ -14,16 +14,15 @@ public class VoiceCommand implements CommandExecutor {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     if (sender.hasPermission("voiceconnect.reload") || !(sender instanceof Player)) {
-                        VoiceConnect.getInstance().reloadConfig();
                         VoiceConnect.getInstance().loadConfig();
                         sender.sendMessage(ChatColor.GREEN + "[VoiceConnect] Config reloaded!");
                     } else {
-                    sender.sendMessage(ChatColor.RED + "[VoiceConnect] You do not have permission to reload the config!");
+                        sender.sendMessage(ChatColor.RED + "[VoiceConnect] You do not have permission to reload the config!");
                     }
                 }
             } else {
                 if (sender.hasPermission("voiceconnect.use") || !(sender instanceof Player)) {
-                    if (VoiceConnect.getInstance().getCached().getResultTime() + VoiceConnect.getInstance().getConfig().getInt("cachetime") < System.currentTimeMillis()) {
+                    if (VoiceConnect.getInstance().getCached() != null && VoiceConnect.getInstance().getCached().getResultTime() + VoiceConnect.getInstance().getConfig().getInt("cachetime") < System.currentTimeMillis()) {
                         sender.sendMessage(ChatColor.YELLOW + "[VoiceConnect] querying " + VoiceConnect.getInstance().getConfig().getString("type") + " server...");
                         new CheckServerTask(sender, VoiceConnect.getInstance()).runTaskAsynchronously(VoiceConnect.getInstance());
                     } else {

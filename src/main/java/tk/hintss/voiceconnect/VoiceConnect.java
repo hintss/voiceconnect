@@ -17,7 +17,7 @@ public class VoiceConnect extends JavaPlugin {
         loadConfig();
 
         if (getConfig().getBoolean("auto-update")) {
-            new Updater(this, "mumbleconnect", getFile(), Updater.UpdateType.DEFAULT, true);
+            new Updater(this, 57725, getFile(), Updater.UpdateType.DEFAULT, true);
         }
 
         getCommand("voice").setExecutor(new VoiceCommand());

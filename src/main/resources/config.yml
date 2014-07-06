@@ -76,6 +76,7 @@ autoannounce-message:
 # only checks with the mumble server again if last check was > this many milliseconds
 cachetime: 10000
 
-# auto-update
+# auto-update/stats
 #------------------------------------------------------------------------------#
 auto-update: true
+stats: true

@@ -25,10 +25,12 @@ public class VoiceConnect extends JavaPlugin {
         getCommand("ts").setExecutor(new VoiceCommand());
         getCommand("teamspeak").setExecutor(new VoiceCommand());
 
-        try {
-            new Metrics(this).start();
-        } catch (IOException ex) {
-            getLogger().warning("Stats no werk! D:");
+        if (getConfig().getBoolean("stats")) {
+            try {
+                new Metrics(this).start();
+            } catch (IOException ex) {
+                getLogger().warning("Stats no werk! D:");
+            }
         }
     }
     
